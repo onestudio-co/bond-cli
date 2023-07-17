@@ -6,13 +6,13 @@ import 'package:bond_cli/commands/bond_command_runner.dart';
 void main(List<String> arguments) async {
   await BondCommandRunner().run(
     [
-      'create',
-      '--project_name',
-      'my_project',
+      'create_model',
+      '--name',
+      'post',
     ],
   ).catchError((error) {
     if (error is! UsageException) throw error;
-    print(error);
+    stderr.writeln(error);
     stderr.writeln(error.toString());
     exit(64); // Exit code 64 indicates a software error.
   });
