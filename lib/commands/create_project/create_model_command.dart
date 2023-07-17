@@ -24,8 +24,8 @@ class CreateModelCommand extends Command<void> {
 
     // Define the paths.
     final modelDirectoryPath = '$modelName/data/models/';
-    final modelFilePath = '$modelDirectoryPath${modelName}_model.dart';
-    final generatedFilePath = '$modelDirectoryPath${modelName}_model.g.dart';
+    final modelFilePath = '$modelDirectoryPath$modelName.dart';
+    final generatedFilePath = '$modelDirectoryPath$modelName.g.dart';
 
     // Create the directories if they don't exist.
     final modelDirectory = Directory(modelDirectoryPath);
