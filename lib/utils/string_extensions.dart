@@ -5,11 +5,11 @@ extension StringExtension on String {
       return this;
     }
 
-    return split(' ').map((word) => word._toCapitalized()).join(' ');
+    return split(' ').map((word) => word.toCapitalized()).join(' ');
   }
 
   /// Capitalizes the first letter of the string.
-  String _toCapitalized() {
+  String toCapitalized() {
     if (isEmpty) {
       return this;
     }

@@ -1,5 +1,6 @@
 import 'package:args/command_runner.dart';
 import 'package:bond_cli/utils/file_utils.dart';
+import 'package:bond_cli/utils/print_utils.dart';
 
 import '../stubs/model_template.dart';
 
@@ -19,7 +20,7 @@ class CreateModelCommand extends Command<void> {
     // Get the model name from command arguments.
     final String? modelName = argResults?['name'];
     if (modelName == null) {
-      print('Model name is required.');
+      ConsolePrinter.error('Model name is required.');
       return;
     }
 
@@ -28,12 +29,18 @@ class CreateModelCommand extends Command<void> {
     final modelFilePath = '$modelDirectoryPath$modelName.dart';
 
     // Create the directories if they don't exist.
-    await createNewDirectory(modelDirectoryPath);
+    bool dirCreated = await createNewDirectory(modelDirectoryPath);
+    if (dirCreated) {
+      ConsolePrinter.success('Created directory: $modelDirectoryPath');
+    }
 
     // Generate content based on templates
     final modelContent = modelStub(modelName: modelName);
 
     // Create the model file.
-    await createNewFile(modelFilePath, modelContent);
+    bool fileCreated = await createNewFile(modelFilePath, modelContent);
+    if (fileCreated) {
+      ConsolePrinter.success('Created file: $modelFilePath');
+    }
   }
 }
