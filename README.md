@@ -21,3 +21,12 @@ To create a new model, use the `create_model` command followed by the `-n` or `-
 
 ```bash
 bond create_model -n YourModelName
+
+
+ ## Contributing
+
+ We welcome contributions from the community.
+
+ ## License
+
+ Please see the LICENSE.md file for more information on the license.
