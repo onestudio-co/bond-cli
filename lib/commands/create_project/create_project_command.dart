@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
@@ -19,6 +18,6 @@ class CreateProjectCommand extends Command {
   void run() async {
     // Access the project_name argument
     var projectName = argResults?['project_name'];
-    log('projectName $projectName');
+    stdout.writeln('projectName $projectName');
   }
 }
