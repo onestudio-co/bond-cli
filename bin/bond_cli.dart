@@ -16,4 +16,20 @@ void main(List<String> arguments) async {
     stderr.writeln(error.toString());
     exit(64); // Exit code 64 indicates a software error.
   });
+  try {
+    await BondCommandRunner().run(
+      [
+        'create',
+        '--projectName',
+        'fahman',
+        '--bundleId',
+        'sa.fahman.ai',
+        '--applicationId',
+        'sa.fahman.ai',
+      ],
+    );
+  } catch (err) {
+    stderr.writeln(err.toString());
+    rethrow;
+  }
 }
