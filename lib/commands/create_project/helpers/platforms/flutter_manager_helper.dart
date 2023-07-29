@@ -16,8 +16,8 @@ extension XFutterManager on FlutterManager {
     final setupFlutterSpinner = setupFlutterSpinners.add(Spinner(
       icon: '✅',
       rightPrompt: (done) => done
-          ? 'Setup $appName project successfully!'
-          : 'Setup $appName project, please wait...',
+          ? 'Setup $appName Flutter project successfully!'
+          : 'Setup $appName Flutter project, please wait...',
     ));
 
     await setupFlutterSpinners.createAndRunSpinner(
