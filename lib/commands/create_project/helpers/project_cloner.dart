@@ -31,6 +31,8 @@ class ProjectCloner {
       await gitDir.delete(recursive: true);
     }
     await Process.run('git', ['init'], workingDirectory: projectDirectory.path);
+    await Process.run('git', ['add', '.'],
+        workingDirectory: projectDirectory.path);
 
     cloning.done();
 
