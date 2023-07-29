@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dependency_manipulator/platforms/android/android.dart';
+import 'package:native_project_manipulator/platforms/android/android.dart';
 import 'package:interact/interact.dart';
 
 import '../interact_helper.dart';

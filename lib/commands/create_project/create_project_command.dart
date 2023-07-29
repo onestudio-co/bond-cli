@@ -4,9 +4,9 @@ import 'package:args/command_runner.dart';
 import 'package:bond_cli/commands/create_project/helpers/platforms/android_manager_helper.dart';
 import 'package:bond_cli/commands/create_project/helpers/platforms/flutter_manager_helper.dart';
 import 'package:bond_cli/commands/create_project/helpers/platforms/ios_manager_helper.dart';
-import 'package:dependency_manipulator/platforms/android/android_manager.dart';
-import 'package:dependency_manipulator/platforms/flutter/flutter_manager.dart';
-import 'package:dependency_manipulator/platforms/ios/ios_manager.dart';
+import 'package:native_project_manipulator/platforms/android/android_manager.dart';
+import 'package:native_project_manipulator/platforms/flutter/flutter_manager.dart';
+import 'package:native_project_manipulator/platforms/ios/ios_manager.dart';
 
 import 'helpers/interact_helper.dart';
 import 'helpers/project_cloner.dart';

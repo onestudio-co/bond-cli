@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:bond_cli/commands/create_project/helpers/interact_helper.dart';
-import 'package:dependency_manipulator/platforms/ios/ios_manager.dart';
+import 'package:native_project_manipulator/platforms/ios/ios_manager.dart';
 import 'package:interact/interact.dart';
 
 
