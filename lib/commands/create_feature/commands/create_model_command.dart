@@ -1,6 +1,7 @@
 import 'package:args/command_runner.dart';
 import 'package:bond_cli/utils/file_utils.dart';
 import 'package:bond_cli/utils/print_utils.dart';
+import 'package:bond_cli/utils/string_extensions.dart';
 
 import '../stubs/model_template.dart';
 
@@ -21,6 +22,11 @@ class CreateModelCommand extends Command<void> {
     final String? modelName = argResults?['name'];
     if (modelName == null) {
       ConsolePrinter.error('Model name is required.');
+      return;
+    }
+
+    if (!modelName.isValidModelName()) {
+      ConsolePrinter.error('Invalid model name.');
       return;
     }
 
