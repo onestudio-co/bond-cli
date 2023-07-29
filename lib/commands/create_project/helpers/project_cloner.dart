@@ -25,6 +25,13 @@ class ProjectCloner {
     if (result.exitCode != 0) {
       throw Exception('Failed to clone project: ${result.stderr}');
     }
+
+    final gitDir = Directory('${projectDirectory.path}/.git');
+    if (await gitDir.exists()) {
+      await gitDir.delete(recursive: true);
+    }
+    await Process.run('git', ['init'], workingDirectory: projectDirectory.path);
+
     cloning.done();
 
     return projectDirectory;
