@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:bond_cli/commands/create_project/helpers/interact_helper.dart';
-import 'package:native_project_manipulator/platforms/ios/ios_manager.dart';
+import 'package:bond_cli/utils/interact_helper.dart';
 import 'package:interact/interact.dart';
-
+import 'package:native_project_manipulator/platforms/ios/ios_manager.dart';
 
 extension XIosManager on IosManager {
   Future<void> setIosProps({
