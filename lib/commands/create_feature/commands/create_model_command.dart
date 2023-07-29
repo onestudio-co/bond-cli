@@ -8,7 +8,7 @@ import '../stubs/model_template.dart';
 
 class CreateModelCommand extends Command<void> {
   @override
-  final name = 'create_model';
+  final name = 'model';
   @override
   final description = 'Create a new Model.';
 

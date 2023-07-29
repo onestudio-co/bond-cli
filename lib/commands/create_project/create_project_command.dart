@@ -16,7 +16,7 @@ class CreateProjectCommand extends Command {
   String get description => 'Creates a new Flutter Bond project';
 
   @override
-  String get name => 'create';
+  String get name => 'project';
 
   CreateProjectCommand() {
     argParser.addOption(
