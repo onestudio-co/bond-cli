@@ -1,5 +1,4 @@
 import 'package:args/command_runner.dart';
-import 'package:bond_cli/utils/command_runner.dart';
 import 'package:bond_cli/utils/file_utils.dart';
 import 'package:bond_cli/utils/print_utils.dart';
 import 'package:bond_cli/utils/string_extensions.dart';
@@ -14,21 +13,33 @@ class CreateModelCommand extends Command<void> {
 
   CreateModelCommand() {
     /// Add an option to specify the name of the model.
-    argParser.addOption('name',
-        abbr: 'n', help: 'Specify the name of the model.');
+    argParser
+      ..addOption('name', abbr: 'n', help: 'Specify the name of the model.')
 
-    /// Add a flag to specify if the model should be JsonSerializable.
-    argParser.addFlag('jsonSerializable',
+      /// Add a flag to specify if the model should be JsonSerializable.
+      ..addFlag(
+        'jsonSerializable',
         abbr: 'j',
-        help: 'Specify if the model should be JsonSerializable.',
-        defaultsTo: false);
+        help: 'Generate code for Json Serialization',
+        negatable: false,
+      )
+
+      /// Add a flag to specify if the model should be Equatable.
+      ..addFlag(
+        'equatable',
+        abbr: 'e',
+        help: 'Make the model equatable',
+        negatable: false,
+      );
   }
 
   @override
   void run() async {
     // Get the model name from command arguments.
     final String? modelName = argResults?['name'];
-    final bool isJsonSerializable = argResults?['jsonSerializable'] ?? false;
+    final bool isJsonSerializable = argResults?['jsonSerializable'] == true;
+    final bool isEquatable = argResults?['equatable'] == true;
+
     if (modelName == null) {
       ConsolePrinter.error('Model name is required.');
       return;
@@ -50,16 +61,16 @@ class CreateModelCommand extends Command<void> {
     }
 
     // Generate content based on templates
-    final modelContent =
-        modelStub(modelName: modelName, jsonSerializable: isJsonSerializable);
+    String modelContent = modelStub(
+      modelName,
+      isJsonSerializable,
+      isEquatable,
+    );
 
     // Create the model file.
     bool fileCreated = await createNewFile(modelFilePath, modelContent);
     if (fileCreated) {
       ConsolePrinter.success('Created file: $modelFilePath');
-
-      /// Run the build runner to generate the model.g.dart file.
-      CommandRunnerHelper.runBuildRunner(modelDirectoryPath);
     }
   }
 }

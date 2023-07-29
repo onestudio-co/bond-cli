@@ -10,6 +10,7 @@ void main(List<String> arguments) async {
       '--name',
       'post',
       '--jsonSerializable',
+      '--equatable',
     ],
   ).catchError((error) {
     if (error is! UsageException) throw error;
