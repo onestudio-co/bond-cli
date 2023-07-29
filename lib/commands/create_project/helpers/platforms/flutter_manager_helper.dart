@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:native_project_manipulator/platforms/flutter/flutter_manager.dart';
+import 'package:bond_cli/utils/interact_helper.dart';
 import 'package:interact/interact.dart';
-
-import '../interact_helper.dart';
+import 'package:native_project_manipulator/platforms/flutter/flutter_manager.dart';
 
 extension XFutterManager on FlutterManager {
   Future<void> setFlutterProps({

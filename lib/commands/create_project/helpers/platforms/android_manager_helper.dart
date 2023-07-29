@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:native_project_manipulator/platforms/android/android.dart';
+import 'package:bond_cli/utils/interact_helper.dart';
 import 'package:interact/interact.dart';
-
-import '../interact_helper.dart';
+import 'package:native_project_manipulator/platforms/android/android.dart';
 
 extension XAndroidManager on AndroidManager {
   Future<void> setAndroidProps({
