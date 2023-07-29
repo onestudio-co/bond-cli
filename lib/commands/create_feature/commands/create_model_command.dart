@@ -1,4 +1,5 @@
 import 'package:args/command_runner.dart';
+import 'package:bond_cli/utils/command_runner.dart';
 import 'package:bond_cli/utils/file_utils.dart';
 import 'package:bond_cli/utils/print_utils.dart';
 import 'package:bond_cli/utils/string_extensions.dart';
@@ -56,6 +57,9 @@ class CreateModelCommand extends Command<void> {
     bool fileCreated = await createNewFile(modelFilePath, modelContent);
     if (fileCreated) {
       ConsolePrinter.success('Created file: $modelFilePath');
+
+      /// Run the build runner to generate the model.g.dart file.
+      CommandRunnerHelper.runBuildRunner(modelDirectoryPath);
     }
   }
 }
