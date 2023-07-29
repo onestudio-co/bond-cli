@@ -1,11 +1,21 @@
 import 'dart:io';
 
+import 'package:interact/interact.dart';
+
 class ProjectCloner {
   Future<Directory> clone(String projectName) async {
-    final gitUrl = 'https://github.com/onestudio-co/flutter-bond.git';
-    final projectDir = Directory('${Directory.current}/$projectName');
+    final cloning = Spinner(
+      icon: '✅',
+      rightPrompt: (done) => done
+          ? 'Project cloned successfully!'
+          : 'Cloning project, please wait...',
+    ).interact();
 
-    if (await projectDir.exists()) {
+    final gitUrl = 'https://github.com/onestudio-co/flutter-bond.git';
+    final projectDirectory =
+        Directory('${Directory.current.path}/$projectName');
+
+    if (await projectDirectory.exists()) {
       throw Exception(
           'Project with this name already exists in current directory!');
     }
@@ -16,6 +26,16 @@ class ProjectCloner {
       throw Exception('Failed to clone project: ${result.stderr}');
     }
 
-    return projectDir;
+    final gitDir = Directory('${projectDirectory.path}/.git');
+    if (await gitDir.exists()) {
+      await gitDir.delete(recursive: true);
+    }
+    await Process.run('git', ['init'], workingDirectory: projectDirectory.path);
+    await Process.run('git', ['add', '.'],
+        workingDirectory: projectDirectory.path);
+
+    cloning.done();
+
+    return projectDirectory;
   }
 }

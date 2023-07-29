@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:bond_cli/commands/create_project/helpers/android_manager_helper.dart';
-import 'package:bond_cli/commands/create_project/helpers/ios_manager_helper.dart';
+import 'package:bond_cli/commands/create_project/helpers/platforms/android_manager_helper.dart';
+import 'package:bond_cli/commands/create_project/helpers/platforms/flutter_manager_helper.dart';
+import 'package:bond_cli/commands/create_project/helpers/platforms/ios_manager_helper.dart';
 import 'package:dependency_manipulator/platforms/android/android_manager.dart';
 import 'package:dependency_manipulator/platforms/flutter/flutter_manager.dart';
 import 'package:dependency_manipulator/platforms/ios/ios_manager.dart';
@@ -42,7 +43,7 @@ class CreateProjectCommand extends Command {
     var androidApplicationId = argResults?['applicationId'];
 
     projectName ??= await XInput.askProjectName(
-      'Enter project name:',
+      'Enter Project Name:',
       'my_dream_project',
     );
     iosBundleId ??= await XInput.askBundleId(
@@ -57,30 +58,32 @@ class CreateProjectCommand extends Command {
     final appName = projectName.replaceAll(' ', '_').toLowerCase();
 
     final projectCloner = ProjectCloner();
-    final directory = await projectCloner.clone(projectName);
+    final projectDirectory = await projectCloner.clone(projectName);
 
-
-    print('directory path: ${directory.path}');
-    final flutterManager =
-        FlutterManager(File('${directory.path}/pubspec.yaml'));
-    await flutterManager.updateName(projectName);
-    await flutterManager.format();
-    await flutterManager.pubGet();
-
-    final iosPath = '${directory.path}/ios';
-    final iosManager = IosManager(Directory(iosPath));
+    final iosDirectory = Directory('${projectDirectory.path}/ios');
+    final iosManager = IosManager(iosDirectory);
     await iosManager.setIosProps(
-      iosDirectory: Directory(iosPath),
+      iosDirectory: iosDirectory,
       bundleId: iosBundleId,
       appName: appName,
     );
 
-    final androidManager =
-        AndroidManager(Directory('${directory.path}/android'));
+    final androidDirectory = Directory('${projectDirectory.path}/android');
+    final androidManager = AndroidManager(androidDirectory);
     await androidManager.setAndroidProps(
-      androidDirectory: Directory('${directory.path}/android'),
+      androidDirectory: androidDirectory,
       applicationId: androidApplicationId,
       appName: appName,
+    );
+
+    final flutterManager = FlutterManager(
+      projectDirectory,
+      printToConsole: false,
+    );
+    await flutterManager.setFlutterProps(
+      appName: appName,
+      directory: projectDirectory,
+      projectName: projectName,
     );
   }
 }
