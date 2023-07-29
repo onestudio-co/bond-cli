@@ -8,7 +8,7 @@ extension XAndroidManager on AndroidManager {
     required String applicationId,
     required String appName,
   }) async {
-    var androidManager = AndroidManager(androidDirectory);
+    final androidManager = AndroidManager(androidDirectory);
 
     await androidManager.prepareEnv(
       appName: appName,
@@ -17,17 +17,14 @@ extension XAndroidManager on AndroidManager {
 
     final types = ['main', 'debug', 'profile'];
 
-
     final packageId = _reverseDomainName(applicationId);
     for (final type in types) {
       final manifest = androidManager.getManifest(type);
-      final manifestParentNode = manifest
-          .filterByName('manifest')
-          .first;
+      final manifestParentNode = manifest.filterByName('manifest').first;
       final newProps = manifestParentNode.props
         ..remove(
           manifestParentNode.props.firstWhere(
-                (element) => element.key == 'package',
+            (element) => element.key == 'package',
           ),
         )
         ..add(
@@ -38,7 +35,7 @@ extension XAndroidManager on AndroidManager {
         );
       manifestParentNode.props = newProps;
 
-      androidManager.updateManifestNode(
+      await androidManager.updateManifestNode(
         type,
         manifestParentNode,
       );
@@ -58,5 +55,6 @@ extension XAndroidManager on AndroidManager {
     );
   }
 
-  String _reverseDomainName(String domainName) => domainName.split('.').reversed.join('.');
+  String _reverseDomainName(String domainName) =>
+      domainName.split('.').reversed.join('.');
 }

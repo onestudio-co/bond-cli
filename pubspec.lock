@@ -110,7 +110,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: bafd0ef370f49e399cb40e46a99ec6e64bc8fc6b
+      resolved-ref: a9dd4b313ca627697a33b89ec49dfed6d092d01e
       url: "https://github.com/kareemradwan/DependencyManipulator.git"
     source: git
     version: "0.0.5"

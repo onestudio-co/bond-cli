@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dependency_manipulator/platforms/android/android.dart';
 import 'package:dependency_manipulator/platforms/ios/ios_manager.dart';
 
 extension XIosManager on IosManager {
@@ -20,7 +19,7 @@ extension XIosManager on IosManager {
       'Profile Staging',
     ];
 
-    await iosManager.updateAppName(appName);
+
 
     for (final buildConfig in buildConfigurations) {
       var prefix = '';
