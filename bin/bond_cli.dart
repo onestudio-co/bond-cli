@@ -9,6 +9,7 @@ void main(List<String> arguments) async {
       'create_model',
       '--name',
       'post',
+      '--jsonSerializable',
     ],
   ).catchError((error) {
     if (error is! UsageException) throw error;

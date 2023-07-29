@@ -12,14 +12,22 @@ class CreateModelCommand extends Command<void> {
   final description = 'Create a new Model.';
 
   CreateModelCommand() {
+    /// Add an option to specify the name of the model.
     argParser.addOption('name',
         abbr: 'n', help: 'Specify the name of the model.');
+
+    /// Add a flag to specify if the model should be JsonSerializable.
+    argParser.addFlag('jsonSerializable',
+        abbr: 'j',
+        help: 'Specify if the model should be JsonSerializable.',
+        defaultsTo: false);
   }
 
   @override
   void run() async {
     // Get the model name from command arguments.
     final String? modelName = argResults?['name'];
+    final bool isJsonSerializable = argResults?['jsonSerializable'] ?? false;
     if (modelName == null) {
       ConsolePrinter.error('Model name is required.');
       return;
@@ -31,7 +39,7 @@ class CreateModelCommand extends Command<void> {
     }
 
     // Define the paths.
-    final modelDirectoryPath = '$modelName/data/models/';
+    final modelDirectoryPath = 'lib/$modelName/data/models/';
     final modelFilePath = '$modelDirectoryPath$modelName.dart';
 
     // Create the directories if they don't exist.
@@ -41,7 +49,8 @@ class CreateModelCommand extends Command<void> {
     }
 
     // Generate content based on templates
-    final modelContent = modelStub(modelName: modelName);
+    final modelContent =
+        modelStub(modelName: modelName, jsonSerializable: isJsonSerializable);
 
     // Create the model file.
     bool fileCreated = await createNewFile(modelFilePath, modelContent);
