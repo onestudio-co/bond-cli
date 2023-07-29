@@ -1,9 +1,19 @@
 import 'dart:io';
 
+import 'package:interact/interact.dart';
+
 class ProjectCloner {
   Future<Directory> clone(String projectName) async {
+    final cloning = Spinner(
+      icon: '✅',
+      rightPrompt: (done) => done
+          ? 'Project cloned successfully!'
+          : 'Cloning project, please wait...',
+    ).interact();
+
     final gitUrl = 'https://github.com/onestudio-co/flutter-bond.git';
-    final projectDirectory = Directory('${Directory.current.path}/$projectName');
+    final projectDirectory =
+        Directory('${Directory.current.path}/$projectName');
 
     if (await projectDirectory.exists()) {
       throw Exception(
@@ -15,6 +25,7 @@ class ProjectCloner {
     if (result.exitCode != 0) {
       throw Exception('Failed to clone project: ${result.stderr}');
     }
+    cloning.done();
 
     return projectDirectory;
   }
