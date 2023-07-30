@@ -4,6 +4,7 @@ import 'package:bond_cli/utils/file_utils.dart';
 import 'package:bond_cli/utils/interact_helper.dart';
 import 'package:bond_cli/utils/print_utils.dart';
 import 'package:bond_cli/utils/string_extensions.dart';
+import 'package:interact/interact.dart';
 
 import '../stubs/model_template.dart';
 
@@ -37,6 +38,9 @@ class CreateModelCommand extends Command<void> {
 
   @override
   void run() async {
+    // Add a spinner to show progress
+    final createModelSpinner = MultiSpinner();
+
     // Get the model name from command arguments.
     var modelName = argResults?['name'];
     modelName ??= XInput.askModelName(
@@ -56,6 +60,15 @@ class CreateModelCommand extends Command<void> {
       return;
     }
 
+    final createdModel = createModelSpinner.add(
+      Spinner(
+        icon: '📦',
+        rightPrompt: (done) => done
+            ? 'Model $modelName created successfully'
+            : 'Creating $modelName model...',
+      ),
+    );
+
     final bool isJsonSerializable = argResults?['jsonSerializable'] == true;
     final bool isEquatable = argResults?['equatable'] == true;
 
@@ -64,10 +77,10 @@ class CreateModelCommand extends Command<void> {
     final modelFilePath = '$modelDirectoryPath$modelName.dart';
 
     // Create the directories if they don't exist.
-    bool dirCreated = await createNewDirectory(modelDirectoryPath);
-    if (dirCreated) {
-      ConsolePrinter.success('Created directory: $modelDirectoryPath');
-    }
+    await createModelSpinner.createAndRunSpinner(
+      function: () => createNewDirectory(modelDirectoryPath),
+      action: 'Create directory: $modelDirectoryPath',
+    );
 
     // Generate content based on templates
     String modelContent = modelStub(
@@ -77,12 +90,17 @@ class CreateModelCommand extends Command<void> {
     );
 
     // Create the model file.
-    bool fileCreated = await createNewFile(modelFilePath, modelContent);
-    if (fileCreated) {
-      ConsolePrinter.success('Created file: $modelFilePath');
+    await createModelSpinner.createAndRunSpinner(
+      function: () => createNewFile(modelFilePath, modelContent),
+      action: 'Create file: $modelFilePath',
+    );
 
-      /// Run the build runner to generate the model.g.dart file.
-      CommandRunnerHelper.runBuildRunner(modelDirectoryPath);
-    }
+    // Run the build runner to generate the model.g.dart file.
+    await createModelSpinner.createAndRunSpinner(
+      function: () => CommandRunnerHelper.runBuildRunner(modelDirectoryPath),
+      action: 'Run build runner to generate the $modelName.g.dart file.',
+    );
+
+    createdModel.done();
   }
 }

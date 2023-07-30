@@ -4,7 +4,7 @@ import 'package:bond_cli/utils/print_utils.dart';
 
 class CommandRunnerHelper {
   /// Run the build runner for the given [path].
-  static void runBuildRunner(String path) async {
+  static runBuildRunner(String path) async {
     try {
       var result = await Process.run('dart', [
         'run',
