@@ -1,3 +1,4 @@
+import 'package:bond_cli/utils/string_extensions.dart';
 import 'package:interact/interact.dart';
 
 extension XInput on Input {
@@ -29,6 +30,26 @@ extension XInput on Input {
 
   static bool _containsSpecialChar(String input) {
     return RegExp(r'[\^$*+?.()|{}\[\]\\]').hasMatch(input);
+  }
+
+  static String askModelName(String prompt) {
+    return Input(
+      prompt: prompt,
+      validator: _isValidModelName,
+    ).interact();
+  }
+
+  static bool _isValidModelName(String input) {
+    if (input.isEmpty) {
+      throw ValidationError('Model name is required.');
+    }
+
+    if (input.isValidModelName()) {
+      throw ValidationError(
+          'Invalid model name. Model name should be in PascalCase. e.g. User or UserDetail');
+    }
+
+    return true;
   }
 
   static bool _isValidBundleOrApplicationId(String id) {

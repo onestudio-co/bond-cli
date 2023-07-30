@@ -18,8 +18,8 @@ extension StringExtension on String {
   }
 
   bool isValidModelName() {
-    /// Check if the name is alphanumeric and doesn't start with a number.
-    if (!startsWith(RegExp(r'[a-zA-Z_$][a-zA-Z_$0-9]*'))) {
+    /// Check if the name is alphanumeric.
+    if (!startsWith(RegExp(r'^[a-zA-Z]+$'))) {
       return false;
     }
 
