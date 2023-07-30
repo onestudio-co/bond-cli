@@ -60,6 +60,7 @@ class CreateModelCommand extends Command<void> {
       return;
     }
 
+    modelName = modelName.toSnakeCase();
     final createdModel = createModelSpinner.add(
       Spinner(
         icon: '📦',
