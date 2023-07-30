@@ -1,6 +1,7 @@
 import 'package:args/command_runner.dart';
 import 'package:bond_cli/utils/command_runner.dart';
 import 'package:bond_cli/utils/file_utils.dart';
+import 'package:bond_cli/utils/interact_helper.dart';
 import 'package:bond_cli/utils/print_utils.dart';
 import 'package:bond_cli/utils/string_extensions.dart';
 
@@ -37,19 +38,26 @@ class CreateModelCommand extends Command<void> {
   @override
   void run() async {
     // Get the model name from command arguments.
-    final String? modelName = argResults?['name'];
-    final bool isJsonSerializable = argResults?['jsonSerializable'] == true;
-    final bool isEquatable = argResults?['equatable'] == true;
+    var modelName = argResults?['name'];
+    modelName ??= XInput.askModelName(
+      'Enter Model Name:',
+    );
 
-    if (modelName == null) {
+    if (modelName == null || (modelName as String).isEmpty) {
       ConsolePrinter.error('Model name is required.');
       return;
     }
 
+    // Validate the model name
     if (!modelName.isValidModelName()) {
-      ConsolePrinter.error('Invalid model name.');
+      ConsolePrinter.error(
+        'Invalid model name. Model name should be in PascalCase. e.g. User or UserDetail',
+      );
       return;
     }
+
+    final bool isJsonSerializable = argResults?['jsonSerializable'] == true;
+    final bool isEquatable = argResults?['equatable'] == true;
 
     // Define the paths.
     final modelDirectoryPath = 'lib/$modelName/data/models/';
