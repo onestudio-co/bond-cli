@@ -1,5 +1,5 @@
 extension StringExtension on String {
-  /// Converts a string to Title Case.
+  /// Converts a string to Title Case. e.g. hello world -> Hello World
   String toTitleCase() {
     if (isEmpty) {
       return this;
@@ -29,5 +29,14 @@ extension StringExtension on String {
     }
 
     return true;
+  }
+
+  /// Converts a string to snake_case. e.g. hello world -> hello_world
+  String toSnakeCase() {
+    if (isEmpty) {
+      return this;
+    }
+
+    return split(' ').map((word) => word.toLowerCase()).join('_');
   }
 }
