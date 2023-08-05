@@ -13,7 +13,5 @@ class CreateCommand extends Command {
   CreateCommand() {
     addSubcommand(CreateProjectCommand());
     addSubcommand(CreateModelCommand());
-
-    // Add more subcommands as needed...
   }
 }

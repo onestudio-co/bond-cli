@@ -1,4 +1,4 @@
-import 'package:bond_cli/utils/string_extensions.dart';
+import 'package:bond_cli/core/utils.dart';
 
 String modelStub(
     String modelName, bool useJsonSerializable, bool useEquatable) {

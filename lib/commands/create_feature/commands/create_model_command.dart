@@ -1,9 +1,6 @@
 import 'package:args/command_runner.dart';
-import 'package:bond_cli/utils/command_runner.dart';
-import 'package:bond_cli/utils/file_utils.dart';
-import 'package:bond_cli/utils/interact_helper.dart';
-import 'package:bond_cli/utils/print_utils.dart';
-import 'package:bond_cli/utils/string_extensions.dart';
+import 'package:bond_cli/core/tasks.dart';
+import 'package:bond_cli/core/utils.dart';
 import 'package:interact/interact.dart';
 
 import '../stubs/model_template.dart';
@@ -11,6 +8,7 @@ import '../stubs/model_template.dart';
 class CreateModelCommand extends Command<void> {
   @override
   String get name => 'model';
+
   @override
   String get description => 'Create a new Model.';
 
@@ -38,70 +36,54 @@ class CreateModelCommand extends Command<void> {
 
   @override
   void run() async {
-    // Add a spinner to show progress
-    final createModelSpinner = MultiSpinner();
+    var modelName = argResults?['name'] as String?;
+    var isJsonSerializable = argResults?['jsonSerializable'] as bool?;
+    var isEquatable = argResults?['equatable'] as bool?;
 
-    // Get the model name from command arguments.
-    var modelName = argResults?['name'];
-    modelName ??= XInput.askModelName(
+    modelName ??= XInput.askValue(
       'Enter Model Name:',
+      null,
+      _isValidModelName,
     );
 
-    if (modelName == null || (modelName as String).isEmpty) {
-      ConsolePrinter.error('Model name is required.');
-      return;
-    }
+    isJsonSerializable ??= XInput.askYesNo(
+      'Do you want to make the model JsonSerializable?',
+      defaultAnswer: true,
+    );
 
-    // Validate the model name
-    if (!modelName.isValidModelName()) {
-      ConsolePrinter.error(
-        'Invalid model name. Model name should be in PascalCase. e.g. User or UserDetail',
-      );
-      return;
-    }
+    isEquatable ??= XInput.askYesNo(
+      'Do you want to make the model Equatable?',
+      defaultAnswer: true,
+    );
 
-    modelName = modelName.toSnakeCase();
-    final createdModel = createModelSpinner.add(
-      Spinner(
-        icon: '📦',
-        rightPrompt: (done) => done
-            ? 'Model $modelName created successfully'
-            : 'Creating $modelName model...',
+    await CreateModelTasks(
+      modelName: modelName.toSnakeCase(),
+      isJsonSerializable: isJsonSerializable,
+      isEquatable: isEquatable,
+      modelContent: modelStub(
+        modelName.toSnakeCase(),
+        isJsonSerializable,
+        isEquatable,
       ),
-    );
+    ).run();
+  }
 
-    final bool isJsonSerializable = argResults?['jsonSerializable'] == true;
-    final bool isEquatable = argResults?['equatable'] == true;
+  static bool _isValidModelName(String input) {
+    if (input.isEmpty) {
+      throw ValidationError('Model name is required.');
+    }
 
-    // Define the paths.
-    final modelDirectoryPath = 'lib/$modelName/data/models/';
-    final modelFilePath = '$modelDirectoryPath$modelName.dart';
+    if (!input.startsWith(RegExp(r'^[a-zA-Z]+$'))) {
+      throw ValidationError(
+          'Invalid model name. Model name should be in PascalCase. e.g. User or UserDetail');
+    }
 
-    // Create the directories if they don't exist.
-    await createModelSpinner.createAndRunSpinner(
-      function: () => createNewDirectory(modelDirectoryPath),
-      action: 'Create directory: $modelDirectoryPath',
-    );
+    /// Check if the name is not a Dart reserved word.
+    if (['do', 'if', 'in', 'for', 'new', 'var'].contains(input)) {
+      throw ValidationError(
+          'Invalid model name. Model name should not be a Dart reserved word.');
+    }
 
-    // Generate content based on templates
-    String modelContent = modelStub(
-      modelName,
-      isJsonSerializable,
-      isEquatable,
-    );
-
-    // Create the model file.
-    await createModelSpinner.createAndRunSpinner(
-      function: () => createNewFile(modelFilePath, modelContent),
-      action: 'Create file: $modelFilePath',
-    );
-
-    // Run the build runner to generate the model.g.dart file.
-    await createModelSpinner.createAndRunSpinner(
-      function: () => CommandRunnerHelper.runBuildRunner(modelDirectoryPath),
-      action: 'Run build runner to generate the $modelName.g.dart file.',
-    );
-
-    createdModel.done();
+    return true;
   }
 }

@@ -11,6 +11,8 @@ dependencies:
   interact: ^2.2.0
   args: ^2.4.2
   native_project_manipulator: ^0.0.9
+  meta: ^1.9.1
+
 dev_dependencies:
   lints: ^2.0.0
   test: ^1.21.0
