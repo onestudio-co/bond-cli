@@ -1,6 +1,7 @@
 import 'package:args/command_runner.dart';
 import 'package:bond_cli/commands/create_project/update_app_name_command.dart';
 
+import 'create_project/update_application_id_command.dart';
 import 'create_project/update_ios_bundle_id_command.dart';
 
 class UpdateCommand extends Command {
@@ -13,5 +14,6 @@ class UpdateCommand extends Command {
   UpdateCommand() {
     addSubcommand(UpdateAppNameCommand());
     addSubcommand(UpdateIOSBundleIdCommand());
+    addSubcommand(UpdateApplicationIdCommand());
   }
 }
