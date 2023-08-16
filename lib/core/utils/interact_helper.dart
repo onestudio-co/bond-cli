@@ -17,7 +17,8 @@ extension XInput on Input {
   static bool Function(String) _checkValidation(
     List<Validator<String>> validators,
   ) {
-    return CompositeValidator<String>(validators).validate;
+    final composite = CompositeValidator<String>(validators);
+    return (input) => composite.validate(input);
   }
 
   static bool askYesNo(String prompt, {required bool defaultAnswer}) {
