@@ -78,7 +78,14 @@ class IosBundleIdValidator extends ReverseDnsValidator {
           "uk",
           "us",
           "ps",
-          "sa"
+          "sa",
+          "ai",
+          "app",
+          "dev",
+          "io",
+          "me",
+          "tv",
+          "ws",
         ]);
 }
 
