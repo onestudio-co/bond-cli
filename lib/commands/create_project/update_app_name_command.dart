@@ -13,7 +13,7 @@ class UpdateAppNameCommand extends Command<void> {
   String get name => 'updateAppName';
 
   @override
-  String get description => 'Update the app name for iOS or Android.';
+  String get description => 'Update the app name for iOS and Android.';
 
   UpdateAppNameCommand() {
     argParser.addOption('name', abbr: 'n', help: 'Specify the new app name.');
