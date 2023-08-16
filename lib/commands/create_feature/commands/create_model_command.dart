@@ -2,7 +2,6 @@ import 'package:args/command_runner.dart';
 import 'package:bond_cli/core/tasks.dart';
 import 'package:bond_cli/core/utils.dart';
 import 'package:bond_cli/core/validators.dart';
-import 'package:interact/interact.dart';
 
 import '../stubs/model_template.dart';
 
@@ -71,24 +70,5 @@ class CreateModelCommand extends Command<void> {
         isEquatable,
       ),
     ).run();
-  }
-
-  static bool _isValidModelName(String input) {
-    if (input.isEmpty) {
-      throw ValidationError('Model name is required.');
-    }
-
-    if (!input.startsWith(RegExp(r'^[a-zA-Z]+$'))) {
-      throw ValidationError(
-          'Invalid model name. Model name should be in PascalCase. e.g. User or UserDetail');
-    }
-
-    /// Check if the name is not a Dart reserved word.
-    if (['do', 'if', 'in', 'for', 'new', 'var'].contains(input)) {
-      throw ValidationError(
-          'Invalid model name. Model name should not be a Dart reserved word.');
-    }
-
-    return true;
   }
 }

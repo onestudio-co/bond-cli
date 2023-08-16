@@ -4,7 +4,6 @@ import 'package:args/command_runner.dart';
 import 'package:bond_cli/core/tasks.dart';
 import 'package:bond_cli/core/utils.dart';
 import 'package:bond_cli/core/validators.dart';
-import 'package:interact/interact.dart';
 import 'package:native_project_manipulator/platforms/android/android_manager.dart';
 import 'package:native_project_manipulator/platforms/flutter/flutter_manager.dart';
 import 'package:native_project_manipulator/platforms/ios/ios_manager.dart';
@@ -96,24 +95,5 @@ class CreateProjectCommand extends Command {
       appName: appName,
       projectName: projectName,
     ).run();
-  }
-
-  static bool _validateProjectName(String value) {
-    final result = RegExp(r'[\^$*+?.()|{}\[\]\\]').hasMatch(value);
-    if (result) {
-      throw ValidationError('Project name cannot contain special characters');
-    }
-    return true;
-  }
-
-  static bool _validateBundleIdOrApplicationId(String value,
-      {bool isIOS = false}) {
-    final result = RegExp(r'^[a-zA-Z][a-zA-Z0-9]*(\.[a-zA-Z][a-zA-Z0-9]*)+$')
-        .hasMatch(value);
-    if (!result) {
-      throw ValidationError(
-          'Invalid ${isIOS ? 'Bundle Id' : 'Application Id'}');
-    }
-    return true;
   }
 }
