@@ -1,6 +1,7 @@
 import 'package:args/command_runner.dart';
 import 'package:bond_cli/core/tasks.dart';
 import 'package:bond_cli/core/utils.dart';
+import 'package:bond_cli/core/validators.dart';
 import 'package:interact/interact.dart';
 
 import '../stubs/model_template.dart';
@@ -39,11 +40,20 @@ class CreateModelCommand extends Command<void> {
     var modelName = argResults?['name'] as String?;
     var isJsonSerializable = argResults?['jsonSerializable'] as bool?;
     var isEquatable = argResults?['equatable'] as bool?;
+    bool Function(String) wrapValidator(Validator<String> validator) {
+      return (String value) => validator.validate(value);
+    }
+
+    final modelNameValidator = CompositeValidator<String>([
+      NonEmptyValidator(),
+      PascalCaseValidator(),
+      NotReservedWordValidator(),
+    ]);
 
     modelName ??= XInput.askValue(
       'Enter Model Name:',
       null,
-      _isValidModelName,
+      wrapValidator(modelNameValidator),
     );
 
     isJsonSerializable ??= XInput.askYesNo(
