@@ -21,14 +21,15 @@ class UpdateAppNameCommand extends Command<void> {
 
   @override
   void run() async {
-    final appName = argResults?['name'] as String? ??
-        XInput.askValue(
-          'Enter New App Name:',
-          null,
-          validators: [
-            NonEmptyValidator(),
-          ],
-        );
+    var appName = argResults?['name'] as String?;
+
+    appName ??= XInput.askValue(
+      'Enter New App Name:',
+      null,
+      validators: [
+        NonEmptyValidator(),
+      ],
+    );
 
     final projectDirectoryPath = Directory.current.path;
 
