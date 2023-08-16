@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:bond_cli/core/tasks.dart';
 import 'package:bond_cli/core/utils.dart';
+import 'package:bond_cli/core/validators.dart';
 import 'package:interact/interact.dart';
 import 'package:native_project_manipulator/platforms/android/android_manager.dart';
 import 'package:native_project_manipulator/platforms/flutter/flutter_manager.dart';
@@ -42,18 +43,25 @@ class CreateProjectCommand extends Command {
     projectName ??= XInput.askValue(
       'Enter Project Name:',
       'my_dream_project',
-      _validateProjectName,
+      validators: [
+        ProjectNameValidator(),
+      ],
     );
+
     iosBundleId ??= XInput.askValue(
       'Enter IOS Bundle Id:',
       'sa.bond.com',
-      (value) => _validateBundleIdOrApplicationId(value, isIOS: true),
+      validators: [
+        BundleIdOrApplicationIdValidator(isIOS: true),
+      ],
     );
 
     androidApplicationId ??= XInput.askValue(
       'Enter Android Application Id:',
       'sa.bond.com',
-      (value) => _validateBundleIdOrApplicationId(value, isIOS: false),
+      validators: [
+        BundleIdOrApplicationIdValidator(isIOS: false),
+      ],
     );
 
     final appName = projectName.replaceAll(' ', '_').toLowerCase();
@@ -103,7 +111,8 @@ class CreateProjectCommand extends Command {
     final result = RegExp(r'^[a-zA-Z][a-zA-Z0-9]*(\.[a-zA-Z][a-zA-Z0-9]*)+$')
         .hasMatch(value);
     if (!result) {
-      throw ValidationError('Invalid ${isIOS ? 'Bundle Id' : 'Application Id'}');
+      throw ValidationError(
+          'Invalid ${isIOS ? 'Bundle Id' : 'Application Id'}');
     }
     return true;
   }
