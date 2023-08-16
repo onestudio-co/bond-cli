@@ -27,6 +27,7 @@ class UpdateIOSBundleIdCommand extends Command<void> {
           null,
           validators: [
             NonEmptyValidator(),
+            IosBundleIdValidator(),
           ],
         );
 
