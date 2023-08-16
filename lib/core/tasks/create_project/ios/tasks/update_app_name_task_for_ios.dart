@@ -1,11 +1,11 @@
 import 'package:bond_cli/core/tasks/core/task.dart';
 import 'package:native_project_manipulator/platforms/ios/ios_manager.dart';
 
-class UpdateAppNameTask extends Task<void> {
+class UpdateIOSAppNameTaskForIOS extends Task<void> {
   final IosManager iosManager;
   final String appName;
 
-  UpdateAppNameTask({
+  UpdateIOSAppNameTaskForIOS({
     required this.iosManager,
     required this.appName,
   });

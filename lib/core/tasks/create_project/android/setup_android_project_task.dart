@@ -4,7 +4,7 @@ import 'package:native_project_manipulator/platforms/android/android.dart';
 
 import 'tasks/fix_import_task.dart';
 import 'tasks/rename_directory_task.dart';
-import 'tasks/update_app_name_task.dart';
+import 'tasks/update_app_name_task_for_android.dart';
 import 'tasks/update_application_id_task.dart';
 import 'tasks/update_manifest_node_task.dart';
 
@@ -25,7 +25,7 @@ class SetupAndroidProjectTask extends Tasks {
 
   @override
   List<Task> get tasks => [
-        UpdateAppNameTask(
+        UpdateAppNameTaskForAndroid(
           androidManager: androidManager,
           appName: appName,
         ),
