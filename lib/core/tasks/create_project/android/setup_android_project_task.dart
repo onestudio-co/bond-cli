@@ -1,10 +1,11 @@
 import 'package:bond_cli/core/tasks/core/task.dart';
 import 'package:bond_cli/core/tasks/core/tasks.dart';
-import 'tasks/update_app_name_task.dart';
-import 'tasks/fix_import_task.dart';
-import 'tasks/rename_directory_task.dart';
 import 'package:native_project_manipulator/platforms/android/android.dart';
 
+import 'tasks/fix_import_task.dart';
+import 'tasks/rename_directory_task.dart';
+import 'tasks/update_app_name_task.dart';
+import 'tasks/update_application_id_task.dart';
 import 'tasks/update_manifest_node_task.dart';
 
 class SetupAndroidProjectTask extends Tasks {
@@ -27,6 +28,10 @@ class SetupAndroidProjectTask extends Tasks {
         UpdateAppNameTask(
           androidManager: androidManager,
           appName: appName,
+        ),
+        UpdateApplicationIdTask(
+          androidManager: androidManager,
+          applicationId: applicationId,
         ),
         ...['main', 'debug', 'profile'].map(
           (e) => UpdateManifestNodeTask(
