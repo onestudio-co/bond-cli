@@ -1,8 +1,8 @@
 import 'package:bond_cli/core/tasks/core/task.dart';
 import 'package:bond_cli/core/tasks/core/tasks.dart';
-import 'tasks/update_app_name_task.dart';
 import 'package:native_project_manipulator/platforms/ios/ios_manager.dart';
 
+import 'tasks/update_app_name_task_for_ios.dart';
 import 'tasks/update_bundle_id_task.dart';
 
 class SetupIosProjectTask extends Tasks {
@@ -35,7 +35,7 @@ class SetupIosProjectTask extends Tasks {
             buildConfig: e,
           ),
         ),
-        UpdateAppNameTask(
+        UpdateIOSAppNameTaskForIOS(
           iosManager: iosManager,
           appName: appName,
         ),

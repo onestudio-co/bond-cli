@@ -1,11 +1,11 @@
 import 'package:bond_cli/core/tasks/core/task.dart';
 import 'package:native_project_manipulator/platforms/android/android.dart';
 
-class UpdateAppNameTask extends Task<void> {
+class UpdateAppNameTaskForAndroid extends Task<void> {
   final String appName;
   final AndroidManager androidManager;
 
-  UpdateAppNameTask({
+  UpdateAppNameTaskForAndroid({
     required this.androidManager,
     required this.appName,
   });
