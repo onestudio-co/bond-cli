@@ -27,6 +27,7 @@ class UpdateApplicationIdCommand extends Command<void> {
       null,
       validators: [
         NonEmptyValidator(),
+        AndroidAppIdValidator(),
       ],
     );
 

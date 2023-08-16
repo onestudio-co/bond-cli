@@ -63,3 +63,71 @@ class BundleIdOrApplicationIdValidator implements Validator<String> {
     return true;
   }
 }
+
+class IosBundleIdValidator extends ReverseDnsValidator {
+  IosBundleIdValidator()
+      : super(reservedWords: [
+          "apple",
+          "com",
+          "net",
+          "edu",
+          "org",
+          "gov",
+          "mil",
+          "co",
+          "uk",
+          "us",
+          "ps",
+          "sa"
+        ]);
+}
+
+class AndroidAppIdValidator extends ReverseDnsValidator {
+  AndroidAppIdValidator()
+      : super(
+          allowUpperCase: true,
+        ); // Android application IDs can contain uppercase characters
+}
+
+class ReverseDnsValidator implements Validator<String> {
+  final List<String> reservedWords;
+  final bool allowUpperCase;
+
+  ReverseDnsValidator({
+    this.reservedWords = const [], // Default to an empty list
+    this.allowUpperCase = false, // Default to disallow uppercase
+  });
+
+  @override
+  bool validate(String value) {
+    var segments = value.split('.');
+
+    if (segments.length < 2) {
+      throw ValidationError(
+          'Must have at least two segments separated by dots.');
+    }
+
+    for (var segment in segments) {
+      if (!segment.contains(allowUpperCase
+          ? RegExp(r'^[a-zA-Z0-9]+$')
+          : RegExp(r'^[a-z0-9]+$'))) {
+        throw ValidationError(
+            'Each segment can only contain ${allowUpperCase ? "alphanumeric" : "lowercase alphanumeric"} characters.');
+      }
+
+      if (segment.startsWith(RegExp(r'[0-9]'))) {
+        throw ValidationError('Each segment must not start with a number.');
+      }
+
+      if (_isReservedWord(segment)) {
+        throw ValidationError('Contains reserved word: $segment.');
+      }
+    }
+
+    return true;
+  }
+
+  bool _isReservedWord(String segment) {
+    return reservedWords.contains(segment);
+  }
+}
