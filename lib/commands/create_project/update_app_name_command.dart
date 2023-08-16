@@ -21,38 +21,36 @@ class UpdateAppNameCommand extends Command<void> {
 
   @override
   void run() async {
-    /// appName is the new app name.
-    var appName = argResults?['name'] as String?;
+    final appName = argResults?['name'] as String? ??
+        XInput.askValue(
+          'Enter New App Name:',
+          null,
+          validators: [
+            NonEmptyValidator(),
+          ],
+        );
 
-    /// If the user didn't specify the app name, ask for it.
-    appName ??= XInput.askValue(
-      'Enter New App Name:',
-      null,
-      validators: [
-        NonEmptyValidator(),
-      ],
-    );
+    final projectDirectoryPath = Directory.current.path;
 
-    // projectDirectory is the directory of the project.
-    var projectDirectoryPath = Directory.current.path;
+    // Update the app name for iOS
+    _updateIOSAppName(projectDirectoryPath, appName);
 
-    /// Update the app name for iOS
+    // Update the app name for Android
+    _updateAndroidAppName(projectDirectoryPath, appName);
+  }
+
+  void _updateIOSAppName(String projectDirectoryPath, String appName) async {
     await UpdateIOSAppNameTaskForIOS(
-      iosManager: IosManager(
-        Directory(
-          '$projectDirectoryPath/ios',
-        ),
-      ),
+      iosManager: IosManager(Directory('$projectDirectoryPath/ios')),
       appName: appName,
     ).execute();
+  }
 
-    /// Update the app name for Android
+  void _updateAndroidAppName(
+      String projectDirectoryPath, String appName) async {
     await UpdateAppNameTaskForAndroid(
-      androidManager: AndroidManager(
-        Directory(
-          '$projectDirectoryPath/android',
-        ),
-      ),
+      androidManager:
+          AndroidManager(Directory('$projectDirectoryPath/android')),
       appName: appName,
     ).execute();
   }
