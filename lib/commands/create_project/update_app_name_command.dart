@@ -32,22 +32,11 @@ class UpdateAppNameCommand extends Command<void> {
 
     final projectDirectoryPath = Directory.current.path;
 
-    // Update the app name for iOS
-    _updateIOSAppName(projectDirectoryPath, appName);
-
-    // Update the app name for Android
-    _updateAndroidAppName(projectDirectoryPath, appName);
-  }
-
-  void _updateIOSAppName(String projectDirectoryPath, String appName) async {
     await UpdateIOSAppNameTaskForIOS(
       iosManager: IosManager(Directory('$projectDirectoryPath/ios')),
       appName: appName,
     ).execute();
-  }
 
-  void _updateAndroidAppName(
-      String projectDirectoryPath, String appName) async {
     await UpdateAppNameTaskForAndroid(
       androidManager:
           AndroidManager(Directory('$projectDirectoryPath/android')),
