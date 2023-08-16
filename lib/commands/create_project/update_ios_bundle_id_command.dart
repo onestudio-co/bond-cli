@@ -8,7 +8,7 @@ import 'package:native_project_manipulator/platforms/ios/ios_manager.dart';
 
 class UpdateIOSBundleIdCommand extends Command<void> {
   @override
-  String get name => 'updateIOSBundleId';
+  String get name => 'ios_bundle_id';
 
   @override
   String get description =>

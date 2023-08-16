@@ -10,7 +10,7 @@ import 'package:native_project_manipulator/platforms/ios/ios_manager.dart';
 
 class UpdateAppNameCommand extends Command<void> {
   @override
-  String get name => 'updateAppName';
+  String get name => 'app_name';
 
   @override
   String get description => 'Update the app name for iOS and Android.';
