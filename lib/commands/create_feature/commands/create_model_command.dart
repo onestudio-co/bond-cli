@@ -40,9 +40,6 @@ class CreateModelCommand extends Command<void> {
     var modelName = argResults?['name'] as String?;
     var isJsonSerializable = argResults?['jsonSerializable'] as bool?;
     var isEquatable = argResults?['equatable'] as bool?;
-    bool Function(String) wrapValidator(Validator<String> validator) {
-      return (String value) => validator.validate(value);
-    }
 
     final modelNameValidator = CompositeValidator<String>([
       NonEmptyValidator(),
@@ -53,7 +50,7 @@ class CreateModelCommand extends Command<void> {
     modelName ??= XInput.askValue(
       'Enter Model Name:',
       null,
-      wrapValidator(modelNameValidator),
+      modelNameValidator,
     );
 
     isJsonSerializable ??= XInput.askYesNo(
