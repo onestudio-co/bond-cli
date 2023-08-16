@@ -4,18 +4,20 @@ import 'package:interact/interact.dart';
 extension XInput on Input {
   static String askValue(
     String prompt,
-    String? defaultValue,
-    Validator<String>? validator,
-  ) {
+    String? defaultValue, {
+    required List<Validator<String>> validators,
+  }) {
     return Input(
       prompt: prompt,
       defaultValue: defaultValue,
-      validator: validator == null ? null : _wrapValidator(validator),
+      validator: _checkValidation(validators),
     ).interact();
   }
 
-  static bool Function(String) _wrapValidator(Validator<String> validator) {
-    return (String value) => validator.validate(value);
+  static bool Function(String) _checkValidation(
+    List<Validator<String>> validators,
+  ) {
+    return CompositeValidator<String>(validators).validate;
   }
 
   static bool askYesNo(String prompt, {required bool defaultAnswer}) {
