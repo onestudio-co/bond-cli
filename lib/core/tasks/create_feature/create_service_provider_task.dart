@@ -19,9 +19,9 @@ class CreateServiceProviderTask extends Tasks {
 
   @override
   List<Task> get tasks {
-    final serviceProviderDirectoryPath = 'lib/$serviceProviderName';
+    final serviceProviderDirectoryPath = 'lib/$serviceProviderName/';
     final serviceProviderFilePath =
-        '$serviceProviderDirectoryPath$serviceProviderName.dart';
+        '$serviceProviderDirectoryPath${serviceProviderName}_service_provider.dart';
     return [
       CreateDirectoryTask(serviceProviderDirectoryPath),
       CreateFileTask(serviceProviderFilePath, serviceProviderContent),
