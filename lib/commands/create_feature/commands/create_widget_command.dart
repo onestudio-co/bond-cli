@@ -30,7 +30,10 @@ class CreateWidgetCommand extends Command<void> {
     widgetName ??= XInput.askValue(
       'Enter Widget Name:',
       null,
-      validators: [NonEmptyValidator(), PascalCaseValidator()],
+      validators: [
+        NonEmptyValidator(),
+        PascalCaseValidator(),
+      ],
     );
 
     widgetType ??= XInput.askList<String>(

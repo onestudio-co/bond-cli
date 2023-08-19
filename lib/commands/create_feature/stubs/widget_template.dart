@@ -6,7 +6,6 @@ String widgetStub(String name, String type) {
       return _statefulWidgetStub(name);
 
     case 'consumer':
-      // TODO: Handle this case.
       return _consumerWidgetStub(name);
 
     case 'stateless':
@@ -20,18 +19,14 @@ String _statelessWidgetStub(String name) {
 import 'package:flutter/material.dart';
 
 class ${name.toTitleCase()} extends StatelessWidget {
+  const ${name.toTitleCase()}({super.key});
+  
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Placeholder();
   }
 }
 '''
-      .trim();
-}
-
-String _consumerWidgetStub(String name) {
-  return '''
-   '''
       .trim();
 }
 
@@ -40,16 +35,35 @@ String _statefulWidgetStub(String name) {
 import 'package:flutter/material.dart';
 
 class ${name.toTitleCase()} extends StatefulWidget {
+  const ${name.toTitleCase()}({super.key});
+  
   @override
-  _${name.toTitleCase()}State createState() => _${name.toTitleCase()}State();
+  State<${name.toTitleCase()}> createState() => _${name.toTitleCase()}State();
 }
 
-class _${name.toTitleCase()}State extends State<$name.toTitleCase()> {
+class _${name.toTitleCase()}State extends State<${name.toTitleCase()}> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Placeholder();
   }
 }
 '''
+      .trim();
+}
+
+String _consumerWidgetStub(String name) {
+  return '''
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+class ${name.toTitleCase()} extends ConsumerWidget {
+  const ${name.toTitleCase()}({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return const Placeholder();
+  }
+}
+   '''
       .trim();
 }
