@@ -29,4 +29,18 @@ extension XInput on Input {
             .interact() ==
         0;
   }
+
+  static T askList<T>(
+    String prompt,
+    List<T> list, {
+    required T defaultAnswer,
+  }) {
+    int index = Select(
+      prompt: prompt,
+      options: list.map((item) => item.toString()).toList(),
+      initialIndex: list.indexOf(defaultAnswer),
+    ).interact();
+
+    return list[index];
+  }
 }
