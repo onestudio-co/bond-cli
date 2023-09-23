@@ -6,7 +6,10 @@ import 'package:bond_cli/core/tasks/github_example/command/github_example_comman
 //  dart compile exe bin/bond.dart -o bond_cli
 // /Users/salahamassi/FlutterProjects/plugins/bond_cli/bond_cli
 void main(List<String> arguments) async {
-  final app = BondCommandRunner()
-    ..addCommand(GithubExampleCommand());
-  app.run(arguments);
+  try {
+    final app = BondCommandRunner()..addCommand(GithubExampleCommand());
+    app.run(arguments);
+  } catch (err) {
+    stderr.writeln(err.toString());
+  }
 }
