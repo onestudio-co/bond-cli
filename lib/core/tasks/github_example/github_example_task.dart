@@ -6,6 +6,6 @@ class GithubExampleTask extends Task<void> {
 
   @override
   Future<void> execute() async {
-    print("This is task shall just print this words to you as a prove how implementing a new task works ^_^" );
+    print("This task shall just print this words to you as a prove how implementing a new task works ^_^" );
   }
 }
