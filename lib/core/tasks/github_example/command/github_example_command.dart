@@ -1,5 +1,5 @@
 import 'package:args/command_runner.dart';
-import 'package:bond_cli/core/tasks/github_example/GithubExampleTask.dart';
+import 'package:bond_cli/core/tasks/github_example/github_example_task.dart';
 
 
 class GithubExampleCommand extends Command<void> {
