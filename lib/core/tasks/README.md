@@ -83,8 +83,10 @@ Here, we've defined a new command named `sample-command`. In the `run` method, w
 Finally, register your command with the Bond CLI:
 
 ```dart
+import 'package:bond_cli/commands/bond_command_runner.dart';
+
 void main(List<String> arguments) {
-  final app = CommandRunner('bond', 'Bond CLI Description')
+  final app = BondCommandRunner()
     ..addCommand(MySampleCommand());
   app.run(arguments);
 }
