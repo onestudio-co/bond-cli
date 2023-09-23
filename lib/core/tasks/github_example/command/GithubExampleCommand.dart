@@ -1,8 +1,8 @@
 import 'package:args/command_runner.dart';
+import 'package:bond_cli/core/tasks/github_example/GithubExampleTask.dart';
 
-import '../GithubExampleTask.dart';
 
-class MySampleCommand extends Command<void> {
+class GithubExampleCommand extends Command<void> {
   @override
   String get name => 'github-example-command';
 
@@ -11,7 +11,7 @@ class MySampleCommand extends Command<void> {
 
   @override
   void run() async {
-    final myTask = MySampleTask();
+    final myTask = GithubExampleTask();
     await myTask.run();
   }
 }

@@ -1,6 +1,6 @@
 import '../core/task.dart';
 
-class MySampleTask extends Task<void> {
+class GithubExampleTask extends Task<void> {
   @override
   String get actionDescription => 'Description of your task';
 
