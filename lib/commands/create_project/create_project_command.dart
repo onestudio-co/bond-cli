@@ -35,8 +35,6 @@ class CreateProjectCommand extends Command {
 
   @override
   void run() async {
-    ConsolePrinter.info('Where is myself');
-
     var projectName = argResults?['projectName'];
     var iosBundleId = argResults?['bundleId'];
     var androidApplicationId = argResults?['applicationId'];
