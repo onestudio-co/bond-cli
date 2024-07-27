@@ -29,10 +29,10 @@ class SetupIosProjectTask extends Tasks {
           'Profile Production',
           'Profile Staging',
         ].map(
-          (e) => UpdateBundleIdTask(
+          (buildConfig) => UpdateBundleIdTask(
             iosManager: iosManager,
             bundleId: bundleId,
-            buildConfig: e,
+            buildConfig: buildConfig,
           ),
         ),
         UpdateIOSAppNameTaskForIOS(
