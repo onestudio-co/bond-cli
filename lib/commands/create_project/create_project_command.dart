@@ -35,6 +35,17 @@ class CreateProjectCommand extends Command {
 
   @override
   void run() async {
+    const asciiArt = '''
+ ____   ___  _   _ ____  
+| __ ) / _ \\| \\ | |  _ \\ 
+|  _ \\| | | |  \\| | | | |
+| |_) | |_| | |\\  | |_| |
+|____/ \\___/|_| \\_|____/ 
+''';
+
+    const message =
+        'Info from https://github.com/onestudio-co/flutter-bond: #FreePalestine 🇵🇸\n';
+
     var projectName = argResults?['projectName'];
     var iosBundleId = argResults?['bundleId'];
     var androidApplicationId = argResults?['applicationId'];
@@ -64,6 +75,11 @@ class CreateProjectCommand extends Command {
     );
 
     final appName = projectName.replaceAll(' ', '_').toLowerCase();
+
+    final projectPath = '${Directory.current.path}/$projectName';
+    ConsolePrinter.info(asciiArt);
+    ConsolePrinter.info('Creating a "$appName" project at $projectPath');
+    ConsolePrinter.info(message);
 
     final projectDirectory = await ProjectCloningTask(
       projectName: projectName,
