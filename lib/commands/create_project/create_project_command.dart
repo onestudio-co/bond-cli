@@ -65,19 +65,26 @@ class CreateProjectCommand extends Command {
 
     final appName = projectName.replaceAll(' ', '_').toLowerCase();
 
+    final projectPath = '${Directory.current.path}/$projectName';
+    ConsolePrinter.info('Creating a "$appName" project at $projectPath');
+
     final projectDirectory = await ProjectCloningTask(
       projectName: projectName,
     ).run();
 
-    await SetupIosProjectTask(
-      iosManager: IosManager(
-        Directory(
-          '${projectDirectory.path}/ios',
+    if (Platform.isMacOS) {
+      await SetupIosProjectTask(
+        iosManager: IosManager(
+          Directory(
+            '${projectDirectory.path}/ios',
+          ),
         ),
-      ),
-      bundleId: iosBundleId,
-      appName: appName,
-    ).run();
+        bundleId: iosBundleId,
+        appName: appName,
+      ).run();
+    } else {
+      ConsolePrinter.warning('skip setup ios ios project for non mac os.');
+    }
 
     await SetupAndroidProjectTask(
       androidManager: AndroidManager(

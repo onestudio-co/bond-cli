@@ -1,14 +1,22 @@
-import 'dart:io';
-
 import 'package:bond_cli/commands/bond_command_runner.dart';
+import 'package:bond_cli/core/utils.dart';
 
-//  dart compile exe bin/bond.dart -o bond_cli
-// /Users/salahamassi/FlutterProjects/plugins/bond_cli/bond_cli
 void main(List<String> arguments) async {
+  if (arguments.contains('--help')) {
+    // ignore_for_file: avoid_print
+    ConsolePrinter.warning(
+        '------------------------------------------------------------------');
+    ConsolePrinter.warning(
+      '⚠️ You are running a local development version of BOND CLI. ⚠️',
+    );
+    ConsolePrinter.warning(
+        '------------------------------------------------------------------');
+    ConsolePrinter.warning('');
+  }
   try {
     await BondCommandRunner().run(arguments);
   } catch (err) {
-    stderr.writeln(err.toString());
+    ConsolePrinter.error(err.toString());
     rethrow;
   }
 }

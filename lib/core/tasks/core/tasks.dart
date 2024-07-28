@@ -14,9 +14,8 @@ abstract class Tasks with Actionable {
   Future<void> run() async {
     final mainSpinner = spinners.add(Spinner(
       icon: '✅',
-      rightPrompt: (done) => done
-          ? '$actionDescription successfully!'
-          : '$actionDescription, please wait...',
+      rightPrompt: (done) =>
+          done ? ' $actionDescription' : ' $actionDescription ...',
     ));
     try {
       await execute();
