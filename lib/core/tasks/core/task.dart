@@ -10,20 +10,20 @@ abstract class Task<T> with Actionable<T> {
   @override
   Future<T> run() async {
     final spinner = Spinner(
-      icon: '🎉',
+      icon: '✅',
       rightPrompt: (done) =>
-          done ? ' $actionDescription successfully!' : ' $actionDescription, please wait...',
+          done ? ' $actionDescription' : ' $actionDescription ...',
     );
 
-    final SpinnerState spinnerState;
+    final SpinnerState? spinnerState;
     if (spinners != null) {
-      spinnerState = spinners!.add(spinner);
+      spinnerState = null;
     } else {
       spinnerState = spinner.interact();
     }
     try {
       final results = await execute();
-      spinnerState.done();
+      spinnerState?.done();
       return results;
     } catch (error) {
       ConsolePrinter.error(error.toString());

@@ -72,15 +72,19 @@ class CreateProjectCommand extends Command {
       projectName: projectName,
     ).run();
 
-    await SetupIosProjectTask(
-      iosManager: IosManager(
-        Directory(
-          '${projectDirectory.path}/ios',
+    if (Platform.isMacOS) {
+      await SetupIosProjectTask(
+        iosManager: IosManager(
+          Directory(
+            '${projectDirectory.path}/ios',
+          ),
         ),
-      ),
-      bundleId: iosBundleId,
-      appName: appName,
-    ).run();
+        bundleId: iosBundleId,
+        appName: appName,
+      ).run();
+    } else {
+      ConsolePrinter.warning('skip setup ios ios project for non mac os.');
+    }
 
     await SetupAndroidProjectTask(
       androidManager: AndroidManager(
