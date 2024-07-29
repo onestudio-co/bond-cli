@@ -229,10 +229,10 @@ packages:
     dependency: "direct main"
     description:
       name: native_project_manipulator
-      sha256: "823fbc914f1b3f8a44440534fb98a52af2e8bd959f85d82f94a664778a3ce681"
+      sha256: "6fd714466300aa474f0c0eba99c558b139dfee8f490208f8f548b6b10f442cb6"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.9"
+    version: "0.0.10"
   node_preamble:
     dependency: transitive
     description:
@@ -469,9 +469,9 @@ packages:
     dependency: transitive
     description:
       name: yaml_edit
-      sha256: "1579d4a0340a83cf9e4d580ea51a16329c916973bffd5bd4b45e911b25d46bfd"
+      sha256: e9c1a3543d2da0db3e90270dbb1e4eebc985ee5e3ffe468d83224472b2194a5f
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "2.2.1"
 sdks:
   dart: ">=3.0.3 <3.6.0"
